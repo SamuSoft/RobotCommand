@@ -74,10 +74,6 @@ class RobotModelTest {
         assert (robot.getDirection() == newDirection);
     }
 
-    @Test
-    void move() {
-    }
-
     @ParameterizedTest
     @ValueSource(ints = {5, 9})
     void newPositionAfterMoveNorth(int xy) {

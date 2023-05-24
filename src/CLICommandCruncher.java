@@ -29,7 +29,6 @@ public class CLICommandCruncher extends Thread {
         var availableDirectionChanges = DirectionChange.getAsListOfStrings();
 
         while (true) {
-//            System.out.print("Enter command: ");
             String input = scanner.nextLine();
             String[] parts = input.split(" ");
 
