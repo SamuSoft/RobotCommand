@@ -2,26 +2,30 @@ import CommandHandlers.DirectionChangeHandler;
 import CommandHandlers.MoveHandler;
 import CommandHandlers.ReportHandler;
 import CommandHandlers.RobotPlacementHandler;
-import Model.*;
-import State.StateHolder;
+import Model.Direction;
+import Model.DirectionChange;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 /*
  * If you see a CLI as a message queue, then we can call this a cruncher
  */
 public class CLICommandCruncher extends Thread {
-    StateHolder stateHolder;
-
     private MoveHandler moveHandler;
     private DirectionChangeHandler directionChangeHandler;
     private ReportHandler reportHandler;
 
     private RobotPlacementHandler robotPlacementHandler;
 
+    private PrintStream out = System.out;
+    private PrintStream err = System.err;
+    private InputStream in = System.in;
+
     @Override
     public void run() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(in);
         var availableDirectionChanges = DirectionChange.getAsListOfStrings();
 
         while (true) {
@@ -41,7 +45,7 @@ public class CLICommandCruncher extends Thread {
                     var y = Integer.parseInt(parts[2]);
                     var direction = Direction.valueOf(parts[3].toUpperCase());
 
-                    robotPlacementHandler.handle(x,y,direction);
+                    robotPlacementHandler.handle(x, y, direction);
                 } catch (IllegalArgumentException ex) {
                     System.err.println("Invalid command. Usage: PLACE X Y F");
                 }
@@ -49,7 +53,7 @@ public class CLICommandCruncher extends Thread {
                 try {
                     moveHandler.handle();
                 } catch (IllegalArgumentException ex) {
-                    System.err.println("Invalid command. Robot cannot move to new position");
+                    err.println("Invalid command. Robot cannot move to new position");
                 }
             } else if (availableDirectionChanges.contains(command)) {
                 try {
@@ -57,16 +61,16 @@ public class CLICommandCruncher extends Thread {
                     directionChangeHandler.handle(change);
                 } catch (IllegalArgumentException ignored) {
                     // This should never happen
-                    System.err.println("Something went wrong, please try again");
+                    err.println("Something went wrong, please try again");
                 }
 
             } else if (command.equals("REPORT")) {
-                reportHandler.report();
+                reportHandler.report(out);
             } else if (command.equals("QUIT")) {
-                System.out.println("Shutting down...");
+                out.println("Shutting down...");
                 System.exit(0);
             } else {
-                System.out.println("Invalid command. Available commands: PLACE, MOVE, LEFT, RIGHT, REPORT");
+                out.println("Invalid command. Available commands: PLACE, MOVE, LEFT, RIGHT, REPORT");
             }
         }
     }
@@ -86,5 +90,17 @@ public class CLICommandCruncher extends Thread {
 
     public void setRobotPlacementHandler(RobotPlacementHandler robotPlacementHandler) {
         this.robotPlacementHandler = robotPlacementHandler;
+    }
+
+    public void setOut(PrintStream out) {
+        this.out = out;
+    }
+
+    public void setErr(PrintStream err) {
+        this.err = err;
+    }
+
+    public void setIn(InputStream in) {
+        this.in = in;
     }
 }

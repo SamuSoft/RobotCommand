@@ -7,18 +7,19 @@ import Model.TableModel;
 import State.StateHolder;
 
 public class Main {
+
     public static void main(String[] args) {
         TableModel table = new SquareTableModel(5, 5);
         StateHolder state = new StateHolder();
         state.setTableModel(table);
 
-        CLICommandCruncher robotCommander = new CLICommandCruncher();
+        CLICommandCruncher cliCruncher = new CLICommandCruncher();
 
-        robotCommander.setMoveHandler(new MoveHandler(state));
-        robotCommander.setDirectionChangeHandler(new DirectionChangeHandler(state));
-        robotCommander.setReportHandler(new ReportHandler(state));
-        robotCommander.setRobotPlacementHandler(new RobotPlacementHandler(state));
+        cliCruncher.setMoveHandler(new MoveHandler(state));
+        cliCruncher.setDirectionChangeHandler(new DirectionChangeHandler(state));
+        cliCruncher.setReportHandler(new ReportHandler(state));
+        cliCruncher.setRobotPlacementHandler(new RobotPlacementHandler(state));
 
-        robotCommander.start();
+        cliCruncher.start();
     }
 }

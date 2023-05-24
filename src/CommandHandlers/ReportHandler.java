@@ -2,6 +2,8 @@ package CommandHandlers;
 
 import State.StateHolder;
 
+import java.io.PrintStream;
+
 public class ReportHandler {
     StateHolder state;
 
@@ -9,8 +11,8 @@ public class ReportHandler {
         this.state = state;
     }
 
-    public void report() {
-        System.out.println(generateReport());
+    public void report(PrintStream out) {
+        out.println(generateReport());
     }
 
     public String generateReport() {
