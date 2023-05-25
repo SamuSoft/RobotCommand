@@ -9,7 +9,9 @@ import Model.TableModel;
 public class StateHolder {
     private TableModel tableModel = null;
     private RobotModel robotModel = null;
-    public StateHolder(){}
+
+    public StateHolder() {
+    }
 
     public TableModel getTableModel() {
         return tableModel;

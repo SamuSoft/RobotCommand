@@ -4,6 +4,7 @@ import State.StateHolder;
 
 public class MoveHandler {
     StateHolder state;
+
     public MoveHandler(StateHolder stateHolder) {
         this.state = stateHolder;
     }

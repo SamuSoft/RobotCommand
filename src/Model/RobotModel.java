@@ -1,9 +1,9 @@
 package Model;
 
 public class RobotModel {
+    private final static int speed = 1;
     Position position;
     Direction direction;
-    private final static int speed = 1;
 
 
     public RobotModel(Position position, Direction direction) {

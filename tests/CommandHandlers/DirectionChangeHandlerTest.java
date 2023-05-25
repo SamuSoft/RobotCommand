@@ -6,21 +6,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class DirectionChangeHandlerTest {
 
     StateHolder state;
     DirectionChangeHandler handler;
-    Position position = new Position(2,2);
+    Position position = new Position(2, 2);
 
 
     @BeforeEach
     public void setup() {
         state = new StateHolder();
-        state.setTableModel(new SquareTableModel(5,5));
+        state.setTableModel(new SquareTableModel(5, 5));
         handler = new DirectionChangeHandler(state);
     }
+
     @ParameterizedTest
     @EnumSource(DirectionChange.class)
     void turnFromNorth(DirectionChange change) {
@@ -36,7 +35,7 @@ class DirectionChangeHandlerTest {
         var robot = new RobotModel(position, direction);
         state.setRobotModel(robot);
         handler.handle(change);
-        assert(robot.getDirection() == newDirection);
+        assert (robot.getDirection() == newDirection);
     }
 
     @ParameterizedTest
@@ -53,7 +52,7 @@ class DirectionChangeHandlerTest {
         var robot = new RobotModel(position, direction);
         state.setRobotModel(robot);
         handler.handle(change);
-        assert(robot.getDirection() == newDirection);
+        assert (robot.getDirection() == newDirection);
     }
 
     @ParameterizedTest
@@ -70,7 +69,7 @@ class DirectionChangeHandlerTest {
         var robot = new RobotModel(position, direction);
         state.setRobotModel(robot);
         handler.handle(change);
-        assert(robot.getDirection() == newDirection);
+        assert (robot.getDirection() == newDirection);
     }
 
     @ParameterizedTest
@@ -87,7 +86,7 @@ class DirectionChangeHandlerTest {
         var robot = new RobotModel(position, direction);
         state.setRobotModel(robot);
         handler.handle(change);
-        assert(robot.getDirection() == newDirection);
+        assert (robot.getDirection() == newDirection);
     }
 
 

@@ -14,8 +14,8 @@ public class RobotPlacementHandler {
     }
 
     /**
-     * @param x The x coordinate on the table to place the robot
-     * @param y The y coordinate on the table to place the robot
+     * @param x         The x coordinate on the table to place the robot
+     * @param y         The y coordinate on the table to place the robot
      * @param direction The direction the robot will be facing
      */
     public void handle(int x, int y, Direction direction) {

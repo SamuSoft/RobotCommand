@@ -30,46 +30,53 @@ public class CLICommandCruncher extends Thread {
 
         while (true) {
             String input = scanner.nextLine();
-            String[] parts = input.split(" ");
+            String[] parts = input.split(",");
 
-            String command = parts[0].toUpperCase();
+            for (int currentCommandIndex = 0; currentCommandIndex < parts.length; currentCommandIndex++) {
+                String command = parts[currentCommandIndex].toUpperCase();
 
-            if (command.equals("PLACE")) {
-                if (parts.length < 4) {
-                    System.err.println("Invalid command. Usage: PLACE X Y F");
-                    continue;
-                }
-                try {
-                    var x = Integer.parseInt(parts[1]);
-                    var y = Integer.parseInt(parts[2]);
-                    var direction = Direction.valueOf(parts[3].toUpperCase());
+                if (command.equals("PLACE")) {
+                    if (parts.length < currentCommandIndex + 4) {
+                        System.err.println("Invalid command. Usage: PLACE,X,Y,F");
+                        continue;
+                    }
+                    try {
+                        var x = Integer.parseInt(parts[currentCommandIndex + 1]);
+                        var y = Integer.parseInt(parts[currentCommandIndex + 2]);
+                        var direction = Direction.valueOf(parts[currentCommandIndex + 3].toUpperCase());
+                        // After we've picked out our parameters we'll move our index forward. At this point we know that
+                        // The parsing was correct, so even if the placement fails we should move forward.
+                        currentCommandIndex = +3;
 
-                    robotPlacementHandler.handle(x, y, direction);
-                } catch (IllegalArgumentException ex) {
-                    System.err.println("Invalid command. Usage: PLACE X Y F");
-                }
-            } else if (command.equals("MOVE")) {
-                try {
-                    moveHandler.handle();
-                } catch (IllegalArgumentException ex) {
-                    err.println("Invalid command. Robot cannot move to new position");
-                }
-            } else if (availableDirectionChanges.contains(command)) {
-                try {
-                    var change = DirectionChange.valueOf(command);
-                    directionChangeHandler.handle(change);
-                } catch (IllegalArgumentException ignored) {
-                    // This should never happen
-                    err.println("Something went wrong, please try again");
-                }
+                        robotPlacementHandler.handle(x, y, direction);
+                    } catch (IllegalArgumentException ex) {
+                        System.err.println("Invalid command. Usage: PLACE X Y F");
+                    }
 
-            } else if (command.equals("REPORT")) {
-                reportHandler.report(out);
-            } else if (command.equals("QUIT")) {
-                out.println("Shutting down...");
-                System.exit(0);
-            } else {
-                out.println("Invalid command. Available commands: PLACE, MOVE, LEFT, RIGHT, REPORT");
+                } else if (command.equals("MOVE")) {
+                    try {
+                        moveHandler.handle();
+                    } catch (IllegalArgumentException ex) {
+                        err.println("Invalid command. Robot cannot move to new position");
+                    }
+
+                } else if (availableDirectionChanges.contains(command)) {
+                    try {
+                        var change = DirectionChange.valueOf(command);
+                        directionChangeHandler.handle(change);
+                    } catch (IllegalArgumentException ignored) {
+                        // This should never happen
+                        err.println("Something went wrong, please try again");
+                    }
+
+                } else if (command.equals("REPORT")) {
+                    reportHandler.report(out);
+                } else if (command.equals("QUIT")) {
+                    out.println("Shutting down...");
+                    System.exit(0);
+                } else {
+                    out.println("Invalid command. Available commands: PLACE, MOVE, LEFT, RIGHT, REPORT");
+                }
             }
         }
     }

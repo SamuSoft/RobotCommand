@@ -58,20 +58,18 @@ public class FunctionalTest {
         return new Object[][]{
                 {
                         new String[]{
-                                "PLACE 0 0 NORTH",
+                                "PLACE,0,0,NORTH",
                                 "MOVE"},
                         "0,1,NORTH"},
                 {
                         new String[]{
-                                "PLACE 0 0 NORTH",
+                                "PLACE,0,0,NORTH",
                                 "LEFT"},
                         "0,0,WEST"},
                 {
                         new String[]{
-                                "PLACE 1 2 EAST",
-                                "MOVE",
-                                "MOVE",
-                                "LEFT",
+                                "PLACE,1,2,EAST",
+                                "MOVE,MOVE,LEFT",
                                 "MOVE"},
                         "3,3,NORTH"}};
     }
